@@ -1,0 +1,12 @@
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\HaversackLibrary.csproj.AssemblyReference.cache
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\HaversackLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\HaversackLibrary.AssemblyInfoInputs.cache
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\HaversackLibrary.AssemblyInfo.cs
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\HaversackLibrary.csproj.CoreCompileInputs.cache
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\bin\Debug\net6.0\HaversackLibrary.deps.json
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\bin\Debug\net6.0\HaversackLibrary.dll
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\bin\Debug\net6.0\HaversackLibrary.pdb
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\HaversackLibrary.dll
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\refint\HaversackLibrary.dll
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\HaversackLibrary.pdb
+D:\Discord Projects\C# Bots\DM's Handy Haversack\HaversackLibrary\obj\Debug\net6.0\ref\HaversackLibrary.dll
