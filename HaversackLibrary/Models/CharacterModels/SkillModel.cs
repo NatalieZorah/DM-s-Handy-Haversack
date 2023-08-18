@@ -1,5 +1,4 @@
 ﻿using static HaversackLibrary.Enums;
-using static HaversackLibrary.StateManagement;
 
 namespace HaversackLibrary.Models.CharacterModels
 {

@@ -11,5 +11,10 @@ namespace HaversackLibrary.Wrappers
     public class DamageTypeWrapper : IDefenseType
     {
         public DamageType DamageType { get; set; }
+
+        public DamageTypeWrapper(DamageType damageType)
+        {
+            DamageType = damageType;
+        }
     }
 }

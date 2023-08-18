@@ -11,5 +11,10 @@ namespace HaversackLibrary.Wrappers
     public class ConditionWrapper : IDefenseType
     {
         public Condition Condition { get; set; }
+
+        public ConditionWrapper(Condition condition)
+        {
+            Condition = condition;
+        }
     }
 }

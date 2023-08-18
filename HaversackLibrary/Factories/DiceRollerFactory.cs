@@ -28,6 +28,17 @@ namespace HaversackLogic.Builders
                 default: return 0;
             }
         }
+
+        /// <summary>
+        /// Provides the average value roll for a given die.
+        /// </summary>
+        /// <param name="die">The die you want the average value of.</param>
+        /// <returns>Integer value of the average roll.</returns>
+        public int GetDiceAverage(DiceType die)
+        {
+            return (GetDiceValue(die) / 2) + 1;
+        }
+
         /// <summary>
         /// Returns a pseudo-random number as a rolled die.
         /// </summary>
@@ -104,7 +115,5 @@ namespace HaversackLogic.Builders
         {
             return diceModels.Sum(die => Roll(die, minimum, maximum, itterations, advantage, disadvantage));
         }
-
-
     }
 }

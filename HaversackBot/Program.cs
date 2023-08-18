@@ -64,7 +64,7 @@ internal class Program
 
             _commands.RegisterCommands<BasicCommands>();
 
-            CharacterModelLogging.BuildTestClasses();
+            CharacterModelLogging.BuildTestCharacter();
 
             RunAsync(args).Wait();
         }

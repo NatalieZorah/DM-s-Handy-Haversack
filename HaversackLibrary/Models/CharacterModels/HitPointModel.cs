@@ -28,15 +28,16 @@ namespace HaversackLibrary.Models.CharacterModels
         /// </summary>
         public List<HitDiceModel> HitDice { get; set; }
 
-        public HitPointModel(List<HitDiceModel> hitDice, int constitutionModifier, int minimumRoll = 1, int? hitPoints = null)
+        public HitPointModel(List<HitDiceModel> hitDice, int constitutionModifier, bool minimumValueIsAverage = false, int? hitPoints = null)
         {
             HitDice = hitDice;
             Bonus = constitutionModifier;
             Average = FindAverageHp();
             Max = FindMaxPossibleHp();
-            Value = hitPoints ?? RollHealth(minimumRoll);
+            Value = hitPoints ?? RollHealth(minimumValueIsAverage);
         }
 
+        // TODO - Possible refactor?
         private int FindAverageHp()
         {
             DiceRollerFactory roller = new DiceRollerFactory();
@@ -62,18 +63,25 @@ namespace HaversackLibrary.Models.CharacterModels
 
             return max;
         }
+
         /// <summary>
         /// Rolls dice to determine health 
         /// </summary>
-        /// <param name="minimum">Optional parameter for the minimum value each rolled die can be.</param>
+        /// <param name="minimumValueIsAverage">Boolean for whether the average values for the dice should be the minimum.</param>
         /// <returns></returns>
-        public int RollHealth(int minimum = 1)
+        public int RollHealth(bool minimumValueIsAverage)
         {
             DiceRollerFactory roller = new DiceRollerFactory();
 
             int sum = 0;
             HitDice.ForEach(hitDie =>
             {
+                int minimum = 1;
+                if (minimumValueIsAverage)
+                {
+                    minimum = roller.GetDiceAverage(hitDie.Die);
+                }
+
                 if (hitDie.Count == 1 && hitDie.PrimaryClass)
                 {
                     sum += roller.GetDiceValue(hitDie.Die) + Bonus;

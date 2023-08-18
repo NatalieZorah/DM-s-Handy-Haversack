@@ -16,7 +16,7 @@ namespace HaversackLibrary.Factories
             { "Fighter", new ClassModel("Fighter",DiceType.D10,3) },
             { "Monk", new ClassModel("Monk",DiceType.D8,3) },
             { "Paladin", new ClassModel("Paladin",DiceType.D10,3) },
-            { "Ranger", new ClassModel("ranger",DiceType.D10,3) },
+            { "Ranger", new ClassModel("Ranger",DiceType.D10,3) },
             { "Rogue", new ClassModel("Rogue",DiceType.D8,3) },
             { "Sorcerer", new ClassModel("Sorcerer",DiceType.D6,1) },
             { "Warlock", new ClassModel("Warlock",DiceType.D8,1) },

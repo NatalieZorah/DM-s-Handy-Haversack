@@ -1,13 +1,6 @@
 ﻿using HaversackLibrary.Factories;
 using HaversackLibrary.Interfaces;
 using HaversackLibrary.Models.ItemModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using static HaversackLibrary.Enums;
 
 namespace HaversackLibrary.Models.CharacterModels
@@ -27,31 +20,35 @@ namespace HaversackLibrary.Models.CharacterModels
         /// </summary>
         public string PlayerName { get; set; }
         /// <summary>
-        /// The character's total level.
+        /// The character's armor class.
         /// </summary>
-        public int Level { get; set; }
+        public int ArmorClass { get; set; }
         /// <summary>
         /// The character's race.
         /// </summary>
-        public string Race { get; set; }
-        /// <summary>
-        /// The proficiency bonus calculated based off total level.
-        /// </summary>
-        public int ProficiencyBonus { get; set; }
+        public RaceModel Race { get; set; }
         /// <summary>
         /// THe list of classes for this character.
         /// </summary>
         /// <seealso cref="ClassModel"/>
         public List<ClassModel> ClassList { get; set; }
         /// <summary>
-        /// The list of all hit dice for this character.
-        /// </summary>
-        public List<HitDiceModel> HitDice { get; set; }
-        /// <summary>
         /// The list of attributes for this character.
         /// </summary>
         /// <seealso cref="AttributeModel"/>
         public List<AttributeModel> Attributes { get; set; }
+        /// <summary>
+        /// The proficiency bonus calculated based off total level.
+        /// </summary>
+        public int ProficiencyBonus { get; set; }
+        /// <summary>
+        /// The character's total level.
+        /// </summary>
+        public int Level { get; set; }
+        /// <summary>
+        /// The total HitPoints for this character.
+        /// </summary>
+        public HitPointModel HitPoints { get; set; }
         /// <summary>
         /// The list of skills for this character.
         /// </summary>
@@ -77,20 +74,27 @@ namespace HaversackLibrary.Models.CharacterModels
         /// </summary>
         /// <param name="name">The name for the new character.</param>
         /// <param name="level">The level for the new character.</param>
-        public CharacterModel(string name, string playerName, string race, List<ClassModel> classList, List<AttributeModel> attributes)
+        public CharacterModel(string name,
+            string playerName,
+            int armorClass,
+            RaceModel race,
+            List<ClassModel> classList,
+            List<AttributeModel> attributes,
+            bool hitPointRollOrAverage = false)
         {
             Name = name;
             PlayerName = playerName;
+            ArmorClass = armorClass;
             Race = race;
             ClassList = classList;
             Attributes = attributes;
-            GearProficiencyList = new List<GearModel>();
-            Level = GetCharacterLevel();
             ProficiencyBonus = GenerateProficiencyBonus();
+            Level = GetCharacterLevel();
+            HitPoints = GenerateHitPoints(hitPointRollOrAverage);
             SkillList = GenerateSkills();
-            HitDice = GenerateHitDice();
+            GearProficiencyList = new List<GearModel>();
             LanguageList = GenerateLanguages();
-            // TODO - GenerateDefenseModel()
+            DefenseList = GenerateDefenses();
         }
 
         /// <summary>
@@ -213,33 +217,125 @@ namespace HaversackLibrary.Models.CharacterModels
             return hitDice;
         }
 
-
-        private List<LanguageModel> GenerateLanguages()
+        /// <summary>
+        /// Finds the attribue modifier for the chosen attribute.
+        /// </summary>
+        /// <param name="attribute">The attribute to query</param>
+        /// <returns>Integer value of chosen attribute.</returns>
+        public int GetAttributeModifierByName(AttributeType attribute)
         {
-            throw new NotImplementedException();
+            AttributeModel? attributeModel = Attributes.FirstOrDefault(attr => attr.Name == attribute);
+            return attributeModel != null ? attributeModel.Modifier : 0;
         }
 
         /// <summary>
-        /// Adds languages to the list of known languages for this character, or adds "Common" if it isn't present.
+        /// Generages hit points for this character.
+        /// </summary>
+        /// <param name="hitPointRollOrAverage">Boolean for whether to use the average roll when it is higher than the roll.</param>
+        /// <returns>HitPointModel</returns>
+        private HitPointModel GenerateHitPoints(bool hitPointRollOrAverage)
+        {
+            return new HitPointModel(GenerateHitDice(), GetAttributeModifierByName(AttributeType.Constitution), hitPointRollOrAverage);
+        }
+
+        /// <summary>
+        /// Generates the list of languages this character knows.
+        /// </summary>
+        /// <returns>A List of LanguageModels that the character knows.</returns>
+        private List<LanguageModel> GenerateLanguages()
+        {
+            List<LanguageModel> languages = new List<LanguageModel>();
+
+            if (CanAddLanguage("Common"))
+            {
+                languages.Add(new LanguageModel("Common", Race.Name));
+            }
+
+            ClassList.ForEach(clazz =>
+            {
+                if (clazz.Name == "Druid" && CanAddLanguage("Druidic"))
+                {
+                    languages.Add(new LanguageModel("Druidic", clazz.Name));
+                }
+
+                if (clazz.Name == "Rogue" && CanAddLanguage("Thieve's Cant"))
+                {
+                    languages.Add(new LanguageModel("Thieve's Cant", clazz.Name));
+                }
+            });
+
+            Race.Languages.ForEach(lang =>
+            {
+                if (CanAddLanguage(lang.Language))
+                {
+                    languages.Add(lang);
+                }
+            });
+
+            return languages;
+        }
+
+        /// <summary>
+        /// Checks whether the given language exists within the list of known languages.
+        /// </summary>
+        /// <param name="language">The name of the language you are looking for.</param>
+        /// <returns>True when langauge is not present, false if it is.</returns>
+        private bool CanAddLanguage(string language)
+        {
+            if (LanguageList == null) { return true; }
+            return !LanguageList.Any(lang => lang.Language.Equals(language, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Adds languages to the list of known languages for this character.
         /// </summary>
         /// <param name="language">The language to be added to the known List.</param>
-        private void AddLanguage(LanguageModel? language = null)
+        public void AddLanguage(LanguageModel language)
         {
-            if (language == null && !LanguageList.Any(lang =>
-                lang.Language.Equals("Common", StringComparison.OrdinalIgnoreCase)))
-            {
-                LanguageList.Add(new LanguageModel("Common", Name));
-            }
-            else if (language != null && !LanguageList.Any(lang =>
-                lang.Language.Equals(language.Language, StringComparison.OrdinalIgnoreCase)))
+            if (CanAddLanguage(language.Language))
             {
                 LanguageList.Add(language);
             }
         }
 
-        private void AddDefense(DefenseModel? defense = null)
+        /// <summary>
+        /// Generates the list of defenses this character has.
+        /// </summary>
+        /// <returns>A List of DefenseModel.</returns>
+        private List<DefenseModel> GenerateDefenses()
         {
+            List<DefenseModel> defenses = new List<DefenseModel>();
+            Race.Defenses.ForEach(defense =>
+            {
+                if (CanAddDefense(defense.Defense))
+                {
+                    defenses.Add(defense);
+                }
+            });
+            return defenses;
+        }
 
+        /// <summary>
+        /// Checks whether a given defense is already present within the characters list of defenses.
+        /// </summary>
+        /// <param name="defense">The name of the defense.</param>
+        /// <returns>True when the defense isn't on the known list, false if it is.</returns>
+        private bool CanAddDefense(IDefenseType defense)
+        {
+            if (DefenseList == null) { return true; }
+            return !DefenseList.Any(def => def.Defense.Equals(defense));
+        }
+
+        /// <summary>
+        /// Adds a defense to the list of defenses if it isn't already present
+        /// </summary>
+        /// <param name="defense"></param>
+        public void AddDefense(DefenseModel defense)
+        {
+            if (CanAddDefense(defense.Defense))
+            {
+                DefenseList.Add(defense);
+            }
         }
     }
 }
