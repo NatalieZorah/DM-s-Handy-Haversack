@@ -1,4 +1,4 @@
-﻿using HaversackLibrary.Models;
+﻿using HaversackLibrary.Models.StatusModels;
 using static HaversackLibrary.Enums;
 
 namespace HaversackLogic.Builders

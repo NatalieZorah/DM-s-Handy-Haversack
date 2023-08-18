@@ -1,4 +1,5 @@
 ﻿using HaversackLibrary.Interfaces;
+using HaversackLibrary.Models.StatusModels;
 
 namespace HaversackLibrary.Models.CharacterModels
 {

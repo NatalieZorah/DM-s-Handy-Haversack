@@ -10,6 +10,7 @@ using HaversackLibrary.Factories;
 using static HaversackLibrary.Enums;
 using HaversackLibrary.Wrappers;
 using HaversackLibrary.Interfaces;
+using HaversackLibrary.Models.StatusModels;
 
 namespace HaversackLibrary.Model_Logging
 {
@@ -88,17 +89,15 @@ namespace HaversackLibrary.Model_Logging
                 classBuilder.CharacterClass("Paladin")
             };
 
-            List<AttributeModel> attributeModels = new List<AttributeModel>()
+            AttributeArrayModel attributes = new AttributeArrayModel(10, 18, 16, 13, 14, 20);
+
+            List<MovementModel> movements = new List<MovementModel>()
             {
-                new AttributeModel(AttributeType.Strength, 12),
-                new AttributeModel(AttributeType.Dexterity, 18),
-                new AttributeModel(AttributeType.Constitution, 16, true),
-                new AttributeModel(AttributeType.Intelligence, 13),
-                new AttributeModel(AttributeType.Wisdom, 14),
-                new AttributeModel(AttributeType.Charisma, 20, true),
+                new MovementModel(MovementType.Walking, 30),
+                new MovementModel(MovementType.Flying, 40)
             };
 
-            CharacterModel character1 = new CharacterModel(name, playerName, armorClass, race, classes, attributeModels, true);
+            CharacterModel character1 = new CharacterModel(name, playerName, armorClass, race, classes, attributes, movements, true);
 
             Logging.TestMessage(JsonConvert.SerializeObject(character1));
         }

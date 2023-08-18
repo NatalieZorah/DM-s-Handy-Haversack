@@ -1,7 +1,7 @@
 ﻿using HaversackLibrary.Models.CharacterModels;
 using static HaversackLibrary.Enums;
 
-namespace HaversackLibrary.Models.Status_Models
+namespace HaversackLibrary.Models.StatusModels
 {
     public class AttributeArrayModel
     {
@@ -62,27 +62,56 @@ namespace HaversackLibrary.Models.Status_Models
         /// <param name="proficiency">Default true boolean for save proficiency.</param>
         public void SetSaveProficiency(AttributeType attribute, bool proficiency = true)
         {
+            GetAttributeByName(attribute).SaveProficiency = proficiency;
+        }
+
+        /// <summary>
+        /// Returns the requested attribute by its name.
+        /// </summary>
+        /// <param name="attribute">The attribute you are looking for.</param>
+        /// <returns>AttributeModel for requested attribute.</returns>
+        private AttributeModel GetAttributeByName(AttributeType attribute)
+        {
+            AttributeModel model = new AttributeModel();
             switch (attribute)
             {
                 case AttributeType.Strength:
-                    Strength.SaveProficiency = proficiency;
+                    model = Strength;
                     break;
                 case AttributeType.Dexterity:
-                    Dexterity.SaveProficiency = proficiency;
+                    model = Dexterity;
                     break;
                 case AttributeType.Constitution:
-                    Constitution.SaveProficiency = proficiency;
+                    model = Constitution;
                     break;
                 case AttributeType.Intelligence:
-                    Intelligence.SaveProficiency = proficiency;
+                    model = Intelligence;
                     break;
                 case AttributeType.Wisdom:
-                    Wisdom.SaveProficiency = proficiency;
+                    model = Wisdom;
                     break;
                 case AttributeType.Charisma:
-                    Charisma.SaveProficiency = proficiency;
+                    model = Charisma;
                     break;
             }
+            return model;
+        }
+
+        /// <summary>
+        /// Finds the attribue modifier for the chosen attribute.
+        /// </summary>
+        /// <param name="attribute">The attribute to query</param>
+        /// <returns>Integer value of chosen attribute.</returns>
+        public int GetAttributeModifierByName(AttributeType attribute)
+        {
+            return GetAttributeByName(attribute).Modifier;
+        }
+
+        public void UpdateAttribute(AttributeModel attribute, int? value = null, bool? isProficient = null)
+        {
+            attribute.Value = value ?? attribute.Value;
+            attribute.SaveProficiency = isProficient ?? attribute.SaveProficiency;
+            attribute.UpdateModifier();
         }
     }
 }

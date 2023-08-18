@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static HaversackLibrary.Enums;
 
-namespace HaversackLibrary.Models.CharacterModels
+namespace HaversackLibrary.Models.StatusModels
 {
     public class AttributeModel
     {
@@ -41,5 +41,11 @@ namespace HaversackLibrary.Models.CharacterModels
         {
             return (value - 10) / 2;
         }
+
+        public void UpdateModifier()
+        {
+            Modifier = CalculateModifier(Value);
+        }
+
     }
 }

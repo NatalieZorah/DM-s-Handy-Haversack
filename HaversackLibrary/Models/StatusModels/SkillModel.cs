@@ -1,6 +1,6 @@
 ﻿using static HaversackLibrary.Enums;
 
-namespace HaversackLibrary.Models.CharacterModels
+namespace HaversackLibrary.Models.StatusModels
 {
     public class SkillModel
     {

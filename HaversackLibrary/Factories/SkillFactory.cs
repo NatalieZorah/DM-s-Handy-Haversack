@@ -1,4 +1,4 @@
-﻿using HaversackLibrary.Models.CharacterModels;
+﻿using HaversackLibrary.Models.StatusModels;
 using static HaversackLibrary.Enums;
 
 namespace HaversackLibrary.Factories
@@ -36,15 +36,11 @@ namespace HaversackLibrary.Factories
             throw SkillNotFoundException(skill);
         }
 
-        public SkillModel Skill(Skills skill, Dictionary<AttributeType, int> attributeModifiers, ProficiencyType proficiency = ProficiencyType.Normal)
+        public SkillModel Skill(Skills skill, AttributeArrayModel attributes, ProficiencyType proficiency = ProficiencyType.Normal)
         {
             if (CharacterSkills.TryGetValue(skill, out var skillModel))
             {
-                if (attributeModifiers.TryGetValue(skillModel.Attribute, out var modifier))
-                {
-                    return Skill(skillModel.Skill, modifier, proficiency);
-                }
-                throw new KeyNotFoundException("Attribute not found.");
+                return Skill(skillModel.Skill, attributes.GetAttributeModifierByName(skillModel.Attribute), proficiency);
             }
 
             throw SkillNotFoundException(skill);

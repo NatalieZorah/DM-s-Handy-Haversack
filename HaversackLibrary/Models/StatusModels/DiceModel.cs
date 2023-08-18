@@ -1,6 +1,6 @@
 ﻿using static HaversackLibrary.Enums;
 
-namespace HaversackLibrary.Models
+namespace HaversackLibrary.Models.StatusModels
 {
     public class DiceModel
     {

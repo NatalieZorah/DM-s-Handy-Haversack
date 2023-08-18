@@ -1,7 +1,7 @@
 ﻿using HaversackLibrary.Interfaces;
 using System.Drawing;
 
-namespace HaversackLibrary.Models.CharacterModels
+namespace HaversackLibrary.Models.StatusModels
 {
     public class PassiveSenseModel : ICharacterSense
     {

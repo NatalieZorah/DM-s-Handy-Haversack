@@ -1,6 +1,6 @@
 ﻿using HaversackLogic.Builders;
 
-namespace HaversackLibrary.Models.CharacterModels
+namespace HaversackLibrary.Models.StatusModels
 {
     public class HitPointModel
     {

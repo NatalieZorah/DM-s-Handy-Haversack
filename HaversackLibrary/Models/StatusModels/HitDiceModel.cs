@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static HaversackLibrary.Enums;
 
-namespace HaversackLibrary.Models.CharacterModels
+namespace HaversackLibrary.Models.StatusModels
 {
     public class HitDiceModel : DiceModel
     {

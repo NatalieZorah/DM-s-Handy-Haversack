@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static HaversackLibrary.Enums;
+﻿using static HaversackLibrary.Enums;
 using HaversackLibrary.Models.ItemModels;
 using HaversackLibrary.Factories;
+using HaversackLibrary.Models.StatusModels;
 
 namespace HaversackLibrary.Models.CharacterModels
 {
@@ -130,6 +126,11 @@ namespace HaversackLibrary.Models.CharacterModels
         public void SetClassLevel(int level)
         {
             Level = level;
+        }
+
+        public void LevelUp()
+        {
+            Level++;
         }
     }
 }
