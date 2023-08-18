@@ -9,6 +9,7 @@ using HaversackLibrary.Models.CharacterModels;
 using HaversackLibrary.Factories;
 using static HaversackLibrary.Enums;
 using HaversackLibrary.Wrappers;
+using HaversackLibrary.Interfaces;
 
 namespace HaversackLibrary.Model_Logging
 {
@@ -76,6 +77,10 @@ namespace HaversackLibrary.Model_Logging
                 {
                     new DefenseModel(new DamageTypeWrapper(DamageType.Radiant), "Succubus", ResistanceType.Vulnerability),
                     new DefenseModel(new ConditionWrapper(Condition.Charmed), "Succubus", ResistanceType.Immunity)
+                },
+                new List<ICharacterSense>()
+                {
+                    new PassiveSenseModel("Darkvision", 120)
                 });
 
             List<ClassModel> classes = new List<ClassModel>() {

@@ -1,6 +1,6 @@
 ﻿namespace HaversackLibrary.Interfaces
 {
-    public interface IDefenseType
+    public interface ICharacterSense
     {
     }
 }

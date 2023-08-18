@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HaversackLibrary.Interfaces;
 using static HaversackLibrary.Enums;
 
 namespace HaversackLibrary.Models.CharacterModels
 {
-    public class PassiveSkillModel
+    public class PassiveSkillModel : ICharacterSense
     {
         /// <summary>
         /// The passive skill in question.

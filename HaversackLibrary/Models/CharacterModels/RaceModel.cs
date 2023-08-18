@@ -1,4 +1,6 @@
-﻿namespace HaversackLibrary.Models.CharacterModels
+﻿using HaversackLibrary.Interfaces;
+
+namespace HaversackLibrary.Models.CharacterModels
 {
     public class RaceModel
     {
@@ -25,6 +27,10 @@
         /// </summary>
         /// <seealso cref="DefenseModel"/>
         public List<DefenseModel> Defenses { get; set; }
+        /// <summary>
+        /// The list of passive senses this race grants.
+        /// </summary>
+        public List<ICharacterSense> PassiveSenses { get; set; }
 
         /// <summary>
         /// Constructor for building a new race.
@@ -38,13 +44,15 @@
             string description,
             List<LanguageModel> languages,
             List<CharacterFeatureModel> features,
-            List<DefenseModel> defenses)
+            List<DefenseModel> defenses,
+            List<ICharacterSense> passiveSenses)
         {
             Name = name;
             Description = description;
             Languages = languages;
             Features = features;
             Defenses = defenses;
+            PassiveSenses = passiveSenses;
         }
     }
 }

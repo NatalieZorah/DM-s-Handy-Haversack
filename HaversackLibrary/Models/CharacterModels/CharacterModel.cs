@@ -70,6 +70,10 @@ namespace HaversackLibrary.Models.CharacterModels
         /// <seealso cref="DefenseModel"/>
         public List<DefenseModel> DefenseList { get; set; }
         /// <summary>
+        /// The list of passive skills and senses this character has.
+        /// </summary>
+        public List<ICharacterSense> PassiveSenses { get; set; }
+        /// <summary>
         /// The constructor for building a specific character.
         /// </summary>
         /// <param name="name">The name for the new character.</param>
@@ -95,6 +99,7 @@ namespace HaversackLibrary.Models.CharacterModels
             GearProficiencyList = new List<GearModel>();
             LanguageList = GenerateLanguages();
             DefenseList = GenerateDefenses();
+            PassiveSenses = GeneratePassiveSenses();
         }
 
         /// <summary>
@@ -336,6 +341,29 @@ namespace HaversackLibrary.Models.CharacterModels
             {
                 DefenseList.Add(defense);
             }
+        }
+
+        /// <summary>
+        /// Generates the full list of passive senses this character has.
+        /// </summary>
+        /// <returns>List of ICharacterSense including passive skills and senses.</returns>
+        private List<ICharacterSense> GeneratePassiveSenses()
+        {
+            List<ICharacterSense> characterSenses = new List<ICharacterSense>();
+
+            Skills[] skills = new Skills[3] { Skills.Insight, Skills.Investigation, Skills.Perception };
+
+            SkillList.ForEach(skill =>
+            {
+                if (skills.Contains(skill.Skill))
+                {
+                    characterSenses.Add(new PassiveSkillModel(skill));
+                }
+            });
+
+            Race.PassiveSenses.ForEach(sense => characterSenses.Add(sense));
+
+            return characterSenses;
         }
     }
 }
