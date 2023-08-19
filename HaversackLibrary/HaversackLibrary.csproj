@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\Campaign Models\Encounter Models\" />
+	  <Folder Include="Models\CampaignModels\EncounterModels\" />
 	</ItemGroup>
 
 </Project>

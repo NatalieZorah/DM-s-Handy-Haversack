@@ -122,17 +122,6 @@ namespace HaversackLibrary.Models.CharacterModels
         }
 
         /// <summary>
-        /// Checks whether the given language exists within the list of known languages.
-        /// </summary>
-        /// <param name="language">The name of the language you are looking for.</param>
-        /// <returns>True when langauge is not present, false if it is.</returns>
-        private bool CanAddLanguage(string language)
-        {
-            if (LanguageList == null) { return true; }
-            return !LanguageList.Any(lang => lang.Language.Equals(language, StringComparison.OrdinalIgnoreCase));
-        }
-
-        /// <summary>
         /// Generates the list of defenses this character has.
         /// </summary>
         /// <returns>A List of DefenseModel.</returns>
@@ -147,17 +136,6 @@ namespace HaversackLibrary.Models.CharacterModels
                 }
             });
             return defenses;
-        }
-
-        /// <summary>
-        /// Checks whether a given defense is already present within the characters list of defenses.
-        /// </summary>
-        /// <param name="defense">The name of the defense.</param>
-        /// <returns>True when the defense isn't on the known list, false if it is.</returns>
-        private bool CanAddDefense(IDefenseType defense)
-        {
-            if (DefenseList == null) { return true; }
-            return !DefenseList.Any(def => def.Defense.Equals(defense));
         }
 
         /// <summary>
@@ -202,6 +180,10 @@ namespace HaversackLibrary.Models.CharacterModels
             });
         }
 
+        /*----------------------------------------------------------------*/
+        /* Private Helper methods for updating and generating model data. */
+        /*----------------------------------------------------------------*/
+
         /// <summary>
         /// Updates the character's level and subsequent relevant values.
         /// </summary>
@@ -212,6 +194,50 @@ namespace HaversackLibrary.Models.CharacterModels
             PassiveSenses = GeneratePassiveSenses();
             // TODO - Refactor for better functionality
             HitPoints = GenerateHitPoints(true);
+        }
+
+        /// <summary>
+        /// Checks whether a given class is already present within the characters list of classes.
+        /// </summary>
+        /// <param name="className">The name of the class.</param>
+        /// <returns>True when the class isn't on the known list, false if it is.</returns>
+        private bool CharacterClassExists(string className)
+        {
+            if (ClassList == null) { return false; }
+            return ClassList.Any(c => c.Name.Equals(className));
+        }
+
+        /// <summary>
+        /// Checks whether a given defense is already present within the characters list of defenses.
+        /// </summary>
+        /// <param name="defense">The name of the defense.</param>
+        /// <returns>True when the defense isn't on the known list, false if it is.</returns>
+        private bool DefenseExists(IDefenseType defense)
+        {
+            if (DefenseList == null) { return false; }
+            return DefenseList.Any(def => def.Defense.Equals(defense));
+        }
+
+        /// <summary>
+        /// Checks whether the given language exists within the list of known languages.
+        /// </summary>
+        /// <param name="language">The name of the language you are looking for.</param>
+        /// <returns>True when langauge is not present, false if it is.</returns>
+        private bool LanguageExists(string language)
+        {
+            if (LanguageList == null) { return false; }
+            return LanguageList.Any(lang => lang.Language.Equals(language, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Checks whether a given movement is already present on the movement list.
+        /// </summary>
+        /// <param name="movement">The movement you wish to look for.</param>
+        /// <returns>True when the movement isn't already on the list, false if it is.</returns>
+        private bool MovementExists(MovementType movement)
+        {
+            if (Movements == null) { return false; }
+            return Movements.Any(m => m.Type == movement);
         }
     }
 }
