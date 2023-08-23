@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HaversackLibrary
+﻿namespace HaversackLibrary
 {
     public static class Enums
     {
@@ -173,6 +167,23 @@ namespace HaversackLibrary
             Ooze,
             Plant,
             Undead
+        }
+
+        /// <summary>
+        /// The list of all spell levels.
+        /// </summary>
+        public enum SpellLevel
+        {
+            Cantrip,
+            First,
+            Second,
+            Third,
+            Fourth,
+            Fifth,
+            Sixth,
+            Seventh,
+            Eighth,
+            Ninth
         }
     }
 }

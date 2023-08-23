@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HaversackLibrary.Models.StatusModels;
 
 namespace HaversackLibrary.Utils
 {
-    // TODO - refactor to use CharacterModel once completed
+    // TODO - Refactor to use CharacterModel once completed
     public class CharacterTrainer
     {
         public int SessionCount { get; set; }

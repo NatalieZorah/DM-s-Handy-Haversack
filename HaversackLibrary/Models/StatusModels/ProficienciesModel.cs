@@ -2,16 +2,18 @@
 using static HaversackLibrary.Enums;
 using HaversackLibrary.Models.ItemModels;
 using HaversackLibrary.Models.CharacterModels;
+using HaversackLibrary.Interfaces;
 
 namespace HaversackLibrary.Models.StatusModels
 {
     public class ProficienciesModel
     {
+        // TODO - Documentation
         public List<SkillModel> SkillProficiencies { get; set; }
 
         public List<GearModel> GearProficiencies { get; set; }
 
-        public ProficienciesModel(AttributeArrayModel attributes, List<ClassModel> classes)
+        public ProficienciesModel(AttributeArrayModel attributes, List<IActorClassModel> classes)
         {
             SkillProficiencies = GenerateSkills(attributes);
             GearProficiencies = GenerateGear(classes);
@@ -46,7 +48,7 @@ namespace HaversackLibrary.Models.StatusModels
             }
         }
 
-        private List<GearModel> GenerateGear(List<ClassModel> classes)
+        private List<GearModel> GenerateGear(List<IActorClassModel> classes)
         {
             ProficienciesFactory factory = new ProficienciesFactory();
 
@@ -54,7 +56,10 @@ namespace HaversackLibrary.Models.StatusModels
 
             classes.ForEach(cls =>
             {
-                gearProficiencies = gearProficiencies.Union(factory.GetClassGearProficiencies(cls.Name)).ToList();
+                if (cls is ClassModel)
+                {
+                    gearProficiencies = gearProficiencies.Union(factory.GetClassGearProficiencies(cls.Name)).ToList();
+                }
             });
 
             return gearProficiencies;

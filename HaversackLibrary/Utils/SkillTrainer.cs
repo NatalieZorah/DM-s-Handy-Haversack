@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Xml.Schema;
 using HaversackLibrary.Models;
 using HaversackLogic.Builders;
+using HaversackLibrary.Models.StatusModels;
 
 namespace HaversackLibrary.Utils
 {
-    // TODO - refactor to use Character models once Character model is complete
+    // TODO - Refactor to use Character models once CharacterModel is complete
     public class SkillTrainer : CharacterTrainer
     {
         public SkillModel Skill { get; set; }

@@ -92,19 +92,19 @@ namespace HaversackLibrary.Models.CharacterModels
         {
             List<LanguageModel> languages = new List<LanguageModel>();
 
-            if (CanAddLanguage("Common"))
+            if (!LanguageExists("Common"))
             {
                 languages.Add(new LanguageModel("Common", Race.Name));
             }
 
             ClassList.ForEach(clazz =>
             {
-                if (clazz.Name == "Druid" && CanAddLanguage("Druidic"))
+                if (clazz.Name == "Druid" && !LanguageExists("Druidic"))
                 {
                     languages.Add(new LanguageModel("Druidic", clazz.Name));
                 }
 
-                if (clazz.Name == "Rogue" && CanAddLanguage("Thieve's Cant"))
+                if (clazz.Name == "Rogue" && !LanguageExists("Thieve's Cant"))
                 {
                     languages.Add(new LanguageModel("Thieve's Cant", clazz.Name));
                 }
@@ -112,7 +112,7 @@ namespace HaversackLibrary.Models.CharacterModels
 
             Race.Languages.ForEach(lang =>
             {
-                if (CanAddLanguage(lang.Language))
+                if (!LanguageExists(lang.Language))
                 {
                     languages.Add(lang);
                 }
@@ -130,7 +130,7 @@ namespace HaversackLibrary.Models.CharacterModels
             List<DefenseModel> defenses = new List<DefenseModel>();
             Race.Defenses.ForEach(defense =>
             {
-                if (CanAddDefense(defense.Defense))
+                if (!DefenseExists(defense.Defense))
                 {
                     defenses.Add(defense);
                 }

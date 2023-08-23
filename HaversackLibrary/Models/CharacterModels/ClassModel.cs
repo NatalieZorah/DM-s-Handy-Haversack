@@ -2,10 +2,11 @@
 using HaversackLibrary.Models.ItemModels;
 using HaversackLibrary.Factories;
 using HaversackLibrary.Models.StatusModels;
+using HaversackLibrary.Interfaces;
 
 namespace HaversackLibrary.Models.CharacterModels
 {
-    public class ClassModel
+    public class ClassModel : IActorClassModel
     {
         /// <summary>
         /// Represents the specific name of the class.

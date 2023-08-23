@@ -119,6 +119,5 @@ namespace HaversackLibrary.Models.CharacterModels
                 DefenseList.Add(defense);
             }
         }
-
     }
 }

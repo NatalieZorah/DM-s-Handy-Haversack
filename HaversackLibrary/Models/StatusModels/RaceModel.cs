@@ -1,7 +1,7 @@
 ﻿using HaversackLibrary.Interfaces;
-using HaversackLibrary.Models.StatusModels;
+using HaversackLibrary.Models.CharacterModels;
 
-namespace HaversackLibrary.Models.CharacterModels
+namespace HaversackLibrary.Models.StatusModels
 {
     public class RaceModel
     {

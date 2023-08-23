@@ -1,4 +1,6 @@
-﻿namespace HaversackLibrary.Models.CharacterModels
+﻿using HaversackLibrary.Models.StatusModels;
+
+namespace HaversackLibrary.Models.CharacterModels
 {
     public class CharacterRaceModel
     {

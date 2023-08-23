@@ -20,8 +20,9 @@ namespace HaversackLibrary.Factories
             { "Rogue", new ClassModel("Rogue",DiceType.D8,3) },
             { "Sorcerer", new ClassModel("Sorcerer",DiceType.D6,1) },
             { "Warlock", new ClassModel("Warlock",DiceType.D8,1) },
-            { "Wizard", new ClassModel("Wizard",DiceType.D6,2) }
+            { "Wizard", new ClassModel("Wizard",DiceType.D6,2) },
         };
+
         /// <summary>
         /// CharacterClass factory method.
         /// </summary>
