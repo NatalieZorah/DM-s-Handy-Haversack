@@ -1,4 +1,5 @@
 ﻿using HaversackLibrary.Models.StatusModels;
+using static HaversackLibrary.Structs;
 using static HaversackLibrary.Enums;
 
 namespace HaversackLogic.Builders
@@ -56,6 +57,7 @@ namespace HaversackLogic.Builders
             Random rnd = new Random();
             return rnd.Next(minimum, maximum);
         }
+
         /// <summary>
         /// Rolls a single die.
         /// </summary>
@@ -66,27 +68,40 @@ namespace HaversackLogic.Builders
         /// <param name="advantage">Rolls the dice twice and returns the higher value.</param>
         /// <param name="disadvantage">Rolls the dice twice and returns the lower value.</param>
         /// <returns>Integer value of the roll after modifiers</returns>
-        public int Roll(DiceType die, int minimum = 1, int maximum = 100, int itterations = 1, bool advantage = false, bool disadvantage = false)
+        public DiceOutputModel Roll(DiceType die, int minimum = 1, int maximum = 100, int itterations = 1, bool advantage = false, bool disadvantage = false)
         {
             int sum = 0;
-            for (int i = 0; i < itterations; i++)
+            string rollString = string.Empty;
+
+            int rollOne = RollDice(die, minimum, maximum);
+            int rollTwo = RollDice(die, minimum, maximum);
+
+            if (advantage && !disadvantage)
             {
-                if (advantage && !disadvantage)
-                {
-                    sum += Math.Max(
-                        RollDice(die, minimum, maximum),
-                        RollDice(die, minimum, maximum));
-                }
-                if (disadvantage && !advantage)
-                {
-                    sum += Math.Min(
-                        RollDice(die, minimum, maximum),
-                        RollDice(die, minimum, maximum));
-                }
-                sum += RollDice(die, minimum, maximum);
+                sum += Math.Max(rollOne, rollTwo);
+                rollString = $"2{Enum.GetName(die)}adv ({Math.Max(rollOne, rollTwo)},~~{Math.Min(rollOne, rollTwo)}~~) = `{sum}`";
             }
-            return sum;
+            if (disadvantage && !advantage)
+            {
+                sum += Math.Min(rollOne, rollTwo);
+                rollString = $"2{Enum.GetName(die)}dis ({Math.Min(rollOne, rollTwo)},~~{Math.Max(rollOne, rollTwo)}~~) = `{sum}`";
+            }
+
+            if (!advantage && !disadvantage)
+            {
+                int rollValue;
+                rollString = $"{itterations}{Enum.GetName(die)} (";
+                for (int i = 0; i < itterations; i++)
+                {
+                    rollValue = RollDice(die, minimum, maximum);
+                    rollString += $"{rollValue},";
+                    sum += rollValue;
+                }
+                rollString += $") = `{sum}`";
+            }
+            return new DiceOutputModel(rollString, sum);
         }
+
         /// <summary>
         /// Rolls a single die a number of times equal to the count provided.
         /// </summary>
@@ -97,10 +112,23 @@ namespace HaversackLogic.Builders
         /// <param name="advantage">Rolls the dice twice and returns the higher value.</param>
         /// <param name="disadvantage">Rolls the dice twice and returns the lower value.</param>
         /// <returns>Integer value of the roll after modifiers</returns>
-        public int Roll(DiceModel dieModel, int minimum = 1, int maximum = 100, int itterations = 1, bool advantage = false, bool disadvantage = false)
+        public DiceOutputModel Roll(DiceModel dieModel, int minimum = 1, int maximum = 100, int itterations = 1, bool advantage = false, bool disadvantage = false)
         {
-            return Roll(dieModel.Die, minimum, maximum, itterations, advantage, disadvantage) * dieModel.Count;
+            DiceOutputModel tempRoll;
+
+            string rollString = string.Empty;
+            int sum = 0;
+
+            for (int i = 0; i < itterations; i++)
+            {
+                tempRoll = Roll(dieModel.Die, minimum, maximum, dieModel.Count, advantage, disadvantage);
+                rollString += $"{tempRoll.RollString} \n";
+                sum += tempRoll.RollValue;
+            }
+
+            return new DiceOutputModel(rollString, sum);
         }
+
         /// <summary>
         /// Rolls multiple dice pulled from the provided list.
         /// </summary>
@@ -111,9 +139,12 @@ namespace HaversackLogic.Builders
         /// <param name="advantage">Rolls the dice twice and returns the higher value.</param>
         /// <param name="disadvantage">Rolls the dice twice and returns the lower value.</param>
         /// <returns>Integer value of the roll after modifiers</returns>
-        public int Roll(List<DiceModel> diceModels, int minimum = 1, int maximum = 100, int itterations = 1, bool advantage = false, bool disadvantage = false)
+        public DiceOutputModel Roll(List<DiceModel> diceModels, int minimum = 1, int maximum = 100, bool advantage = false, bool disadvantage = false)
         {
-            return diceModels.Sum(die => Roll(die, minimum, maximum, itterations, advantage, disadvantage));
+
+            return diceModels.ForEach(die => Roll(die, minimum, maximum, die.Count, advantage, disadvantage));
         }
+
+
     }
 }
